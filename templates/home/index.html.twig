@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home - Neuralbey Internships{% endblock %}
+
+{% block body %}
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold animate__animated animate__fadeIn">Find Your Perfect Internship</h1>
+            <p class="lead animate__animated animate__fadeIn animate__delay-1s">Gain real-world experience with top companies.</p>
+            <form method="get" class="d-flex justify-content-center mt-4 animate__animated animate__fadeIn animate__delay-2s">
+                <input class="form-control form-control-lg w-50 me-2" type="search" name="q" placeholder="Search internships..." aria-label="Search">
+                <button class="btn btn-light px-4" type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <div class="container my-5">
+        {% if app.request.query.get('q') %}
+            <div class="alert alert-info mb-4">
+                Showing results for: <strong>"{{ app.request.query.get('q') }}"</strong>
+            </div>
+        {% endif %}
+
+        <div class="row g-4">
+            {% for internship in internships %}
+            <div class="col-md-6 col-lg-4 animate__animated animate__fadeIn">
+                <div class="card h-100 p-3">
+                    <div class="card-body position-relative">
+                        <span class="category-badge">{{ internship.category }}</span>
+                        <h5 class="card-title mt-2">{{ internship.title }}</h5>
+                        <span class="level-indicator">{{ internship.level }}</span>
+                        <p class="card-text">{{ internship.description|slice(0, 100) }}...</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <small class="text-muted">{{ internship.pubDate|date("F j, Y") }}</small>
+                            {% if is_granted('ROLE_USER') %}
+                                <a href="{{ path('app_register_internship', {'id': internship.id}) }}" class="btn btn-primary">Apply</a>
+                            {% else %}
+                                <a href="{{ path('app_login') }}" class="btn btn-primary">Login to Apply</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center">
+                <div class="alert alert-warning">
+                    No internships available. {% if not is_granted('ROLE_USER') %}<a href="{{ path('app_register') }}">Register</a> to be notified when new internships are posted.{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+            padding: 6rem 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .card {
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .category-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: rgba(255,255,255,0.9);
+            color: #4f46e5;
+        }
+        
+        .level-indicator {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            background: #f3f4f6;
+            color: #4f46e5;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: #4f46e5;
+            border-color: #4f46e5;
+        }
+
+        .btn-primary:hover {
+            background-color: #4338ca;
+            border-color: #4338ca;
+        }
+    </style>
+{% endblock %}

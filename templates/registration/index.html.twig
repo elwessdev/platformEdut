@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="signup-container animate__animated animate__fadeIn">
+            <h1>Register</h1>
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.username, {
+                    label: 'Username',
+                    attr: {'class': 'form-control mb-3'}
+                }) }}
+                {{ form_row(registrationForm.firstName, {
+                    label: 'First Name',
+                    attr: {'class': 'form-control mb-3'}
+                }) }}
+                {{ form_row(registrationForm.lastName, {
+                    label: 'Last Name',
+                    attr: {'class': 'form-control mb-3'}
+                }) }}
+                {{ form_row(registrationForm.email, {
+                    label: 'Email',
+                    attr: {'class': 'form-control mb-3'}
+                }) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password',
+                    attr: {'class': 'form-control mb-4'}
+                }) }}
+                
+                <button type="submit" class="btn btn-primary btn-lg">Register</button>
+            {{ form_end(registrationForm) }}
+            <div class="login-link mt-3">
+                <p>Already have an account? <a href="{{ path('app_login') }}">Login here</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .signup-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 2rem 0;
+        }
+        .signup-container h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        .btn-primary {
+            width: 100%;
+            background-color: #4f46e5;
+            border: none;
+            padding: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #6b7280;
+        }
+        .login-link a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+        }
+        .form-control:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+    </style>
+{% endblock %}

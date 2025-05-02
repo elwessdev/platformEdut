@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile - Neuralbey{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        padding: 4rem 0;
+        margin-bottom: 3rem;
+        color: white;
+    }
+    
+    .profile-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        overflow: hidden;
+        margin-top: -100px;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* ... (le reste de votre CSS reste inchangé) ... */
+</style>
+{% endblock %}
+
+{% block body %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ path('app_home') }}">
+            <span class="text-primary">Neural</span>bey
+        </a>
+        <!-- ... (le reste de votre navbar) ... -->
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="text-center animate__animated animate__fadeIn">
+            <h1 class="display-4 fw-bold">Profile Dashboard</h1>
+            <p class="lead">Manage your personal information and track your progress</p>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="profile-container animate__animated animate__fadeInUp">
+        <div class="profile-header">
+            <div class="profile-image mx-auto">
+                {{ app.user.username|first|upper }}
+            </div>
+            <h2 class="mb-2">{{ app.user.username }}</h2>
+            <p class="text-muted mb-3">{{ app.user.email }}</p>
+            <a href="{{ path('app_profile_edit') }}" class="btn btn-primary edit-button">
+                Edit Profile
+            </a>
+        </div>
+
+        <div class="profile-info">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-card">
+                        <div class="info-label">Full Name</div>
+                        <div class="info-value">
+                            {% if app.user.firstName and app.user.lastName %}
+                                {{ app.user.firstName }} {{ app.user.lastName }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- ... (les autres cartes d'information) ... -->
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value">{{ active_internships }}</div>
+                    <div class="stat-label">Active Internships</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ completed_tasks }}</div>
+                    <div class="stat-label">Completed Tasks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ completion_rate }}%</div>
+                    <div class="stat-label">Completion Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
