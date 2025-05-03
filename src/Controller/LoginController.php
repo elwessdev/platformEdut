@@ -22,7 +22,7 @@ class LoginController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', [
+        return $this->render('login/index.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error
         ]);
@@ -33,6 +33,6 @@ class LoginController extends AbstractController
     {
         // Ce code ne sera jamais exécuté.
         // Symfony intercepte automatiquement cette route si configurée dans security.yaml
-        throw new \LoginException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
